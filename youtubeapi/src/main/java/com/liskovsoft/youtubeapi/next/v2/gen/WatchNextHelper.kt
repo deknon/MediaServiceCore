@@ -52,6 +52,10 @@ internal fun WatchNextResult.getChapters() = getPlayerOverlays()?.decoratedPlaye
     ?: engagementPanels?.firstNotNullOfOrNull { it?.engagementPanelSectionListRenderer?.content?.macroMarkersListRenderer?.contents }
     ?: frameworkUpdates?.entityBatchUpdate?.mutations
         ?.firstNotNullOfOrNull { it?.payload?.macroMarkersListEntity?.markersList?.takeIf { it.markerType == MARKER_TYPE_CHAPTERS }?.markers }
+private fun WatchNextResult.getHeatmap() = frameworkUpdates?.entityBatchUpdate?.mutations
+    ?.firstNotNullOfOrNull { it?.payload?.macroMarkersListEntity?.markersList?.takeIf { it.markerType == MARKER_TYPE_HEATMAP } }
+internal fun WatchNextResult.getHeatMarkers() = getHeatmap()?.markers
+internal fun WatchNextResult.getMostReplayedDecorations() = getHeatmap()?.markersDecoration?.timedMarkerDecorations
 internal fun WatchNextResult.getCommentPanel() = engagementPanels?.firstOrNull { it?.isCommentsSection() == true }
 internal fun WatchNextResult.getDescriptionPanel() = engagementPanels?.firstOrNull { it?.isDescriptionSection() == true }
 internal fun WatchNextResult.getCollaboratorPanel() = engagementPanels?.firstOrNull { it?.isCollaboratorSection() == true }

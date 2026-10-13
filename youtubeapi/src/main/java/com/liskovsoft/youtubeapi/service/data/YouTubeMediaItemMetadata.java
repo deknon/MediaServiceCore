@@ -1,6 +1,7 @@
 package com.liskovsoft.youtubeapi.service.data;
 
 import com.liskovsoft.mediaserviceinterfaces.data.ChapterItem;
+import com.liskovsoft.mediaserviceinterfaces.data.HeatMarker;
 import com.liskovsoft.mediaserviceinterfaces.data.MediaGroup;
 import com.liskovsoft.mediaserviceinterfaces.data.MediaItem;
 import com.liskovsoft.mediaserviceinterfaces.data.MediaItemMetadata;
@@ -308,6 +309,16 @@ public class YouTubeMediaItemMetadata implements MediaItemMetadata {
 
     @Override
     public List<ChapterItem> getChapters() {
+        return null;
+    }
+
+    @Override
+    public List<HeatMarker> getHeatMarkers() {
+        return null;
+    }
+
+    @Override
+    public List<HeatMarker> getMostReplayedMarkers() {
         return null;
     }
 

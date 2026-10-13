@@ -135,8 +135,18 @@ internal data class WatchNextResult(
                     ) {
                         data class MarkersList(
                             val markers: List<ChapterItemWrapper?>?,
-                            val markerType: String?
-                        )
+                            val markerType: String?,
+                            val markersDecoration: MarkersDecoration?
+                        ) {
+                            data class MarkersDecoration(
+                                val timedMarkerDecorations: List<TimedMarkerDecoration?>?
+                            ) {
+                                data class TimedMarkerDecoration(
+                                    val visibleTimeRangeStartMillis: Long?,
+                                    val visibleTimeRangeEndMillis: Long?
+                                )
+                            }
+                        }
                     }
                 }
             }

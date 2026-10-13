@@ -31,6 +31,14 @@ public interface MediaItemMetadata {
     List<MediaGroup> getSuggestions();
     PlaylistInfo getPlaylistInfo();
     List<ChapterItem> getChapters();
+    /**
+     * Heatmap buckets that cover the whole video. Null when the video has no heatmap.
+     */
+    List<HeatMarker> getHeatMarkers();
+    /**
+     * Ranges YouTube itself labels as "Most replayed" (intensity is always 1). Null when absent.
+     */
+    List<HeatMarker> getMostReplayedMarkers();
     List<NotificationState> getNotificationStates();
     long getDurationMs();
     String getBadgeText();

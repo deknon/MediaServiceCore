@@ -312,7 +312,10 @@ internal data class ChapterItemWrapper(
     val title: TextItem?,
     val startMillis: String?,
     val durationMillis: String?,
-    val thumbnailDetails: ThumbnailItem?
+    val thumbnailDetails: ThumbnailItem?,
+
+    // Heatmap
+    val intensityScoreNormalized: Float?
 )
 
 internal data class MacroMarkersListItemRenderer(

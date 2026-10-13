@@ -177,6 +177,22 @@ internal data class MediaItemMetadataImpl(private val watchNextResult: WatchNext
         }
     }
 
+    private val heatMarkerList by lazy {
+        watchNextResult.getHeatMarkers()?.mapNotNull {
+            val startMs = it?.startMillis?.toLongOrNull() ?: return@mapNotNull null
+            val durationMs = it.durationMillis?.toLongOrNull() ?: return@mapNotNull null
+            createHeatMarker(startMs, durationMs, it.intensityScoreNormalized ?: 0f)
+        }?.takeIf { it.isNotEmpty() }
+    }
+
+    private val mostReplayedMarkerList by lazy {
+        watchNextResult.getMostReplayedDecorations()?.mapNotNull {
+            val startMs = it?.visibleTimeRangeStartMillis ?: return@mapNotNull null
+            val endMs = it.visibleTimeRangeEndMillis ?: return@mapNotNull null
+            createHeatMarker(startMs, endMs - startMs, 1f)
+        }?.takeIf { it.isNotEmpty() }
+    }
+
     private val notificationStateList by lazy {
         val currentId = notificationPreference?.getCurrentStateId()
         val result = notificationPreference?.getItems()?.mapNotNull {
@@ -301,6 +317,14 @@ internal data class MediaItemMetadataImpl(private val watchNextResult: WatchNext
         return chapterList
     }
 
+    override fun getHeatMarkers(): List<HeatMarker>? {
+        return heatMarkerList
+    }
+
+    override fun getMostReplayedMarkers(): List<HeatMarker>? {
+        return mostReplayedMarkerList
+    }
+
     override fun getNotificationStates(): List<NotificationState?>? {
         return notificationStateList
     }
@@ -312,4 +336,10 @@ internal data class MediaItemMetadataImpl(private val watchNextResult: WatchNext
     override fun getBadgeText(): String? {
         return badgeTextItem
     }
+}
+
+private fun createHeatMarker(startMs: Long, durationMs: Long, intensity: Float) = object : HeatMarker {
+    override fun getStartMs() = startMs
+    override fun getDurationMs() = durationMs
+    override fun getIntensity() = intensity
 }
